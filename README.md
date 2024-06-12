@@ -1,5 +1,6 @@
 # Conway's Game of Life
 Simple version of Conway's Game of Life made with python using pygame.
+
 ![Screenshot 2024-06-12 235402](https://github.com/memo1918/GameOfLife/assets/52012349/25b4d085-f892-4834-9c92-a6ba3e9c5324)
 
 
