@@ -29,7 +29,7 @@ pip install pygame
 ```
 - Run main.py
 ```cmd
-python src/main.py
+python main.py
 ```
 Note: Make sure that all files are in the same folder
 
