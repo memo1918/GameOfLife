@@ -1,4 +1,5 @@
 venv/
 .vscode
 __pycache__/
-statistics.json
+build/web-cache/
+build/version.txt

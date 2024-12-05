@@ -1,8 +1,9 @@
 import pygame
 import sys
+import asyncio
 from Grid import Grid
 
-def play() -> None:
+async def asyncPlay() -> None:
     pause = True
     moving = False
     
@@ -42,8 +43,11 @@ def play() -> None:
             clock.tick(10)
         else:   
             clock.tick(30)
-        
+            
+        await asyncio.sleep(0)
 
+
+    
 
 if __name__ == "__main__":
     pygame.init()
@@ -55,4 +59,4 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode((resolution[0], resolution[1]))
 
-    play()
+    asyncio.run(asyncPlay())
