@@ -52,7 +52,7 @@ async def asyncPlay() -> None:
 if __name__ == "__main__":
     pygame.init()
     # Change this 3 parameters to control the look of the game 
-    resolution = [420,420] 
+    resolution = [720, 720] 
     size = 10
     spacing = 1
     
