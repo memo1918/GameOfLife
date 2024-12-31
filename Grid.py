@@ -8,6 +8,7 @@ class Grid():
         self.gridSize = gridSize
         self.spacing = spacing
         self.lifes: list[list[Life]] = []
+        self.adding = True
         
     def calculateGrid(self) -> list:
         wSize = int(self.width/(self.gridSize+self.spacing))
@@ -42,12 +43,18 @@ class Grid():
                 else:
                     draw.rect(self.screen,"black",block)
             
-    def click(self,mx,my) -> None:
-        y = my//(self.gridSize+self.spacing)
-        x = mx//(self.gridSize+self.spacing)
+    def click(self,mx,my,state) -> None:
+        if mx >= 0 and my >= 0:
+            y = my//(self.gridSize+self.spacing)
+            x = mx//(self.gridSize+self.spacing)
         try: 
-            clicked =  self.lifes[x][y]
-            clicked.state = True
+            if state:
+                clicked = self.lifes[x][y]
+                clicked.state = not clicked.state
+                self.adding = clicked.state
+            else:
+                clicked = self.lifes[x][y]
+                clicked.state = self.adding
         except:
             return
 

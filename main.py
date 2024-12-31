@@ -7,13 +7,31 @@ async def asyncPlay() -> None:
     pause = True
     moving = False
     
-    grid = Grid(screen,resolution[1],resolution[0],size,spacing)
+    grid = Grid(screen,resolution[1]-50,resolution[0],size,spacing)
     grid.allocateLifes()
     grid.sendNeighbors()
+    
+    leftButton = pygame.Rect(10,resolution[1]-50,resolution[0]/2-20,40)
+    rightButton = pygame.Rect(resolution[0]/2+10,resolution[1]-50,resolution[0]/2-20,40)
+    font = pygame.font.SysFont(None, 36)
+    left_text = font.render('Clear', True, (255, 255, 255))
+    right_text = font.render('Stop', True, (255, 255, 255))
+    
     
     while True:
         screen.fill((50,50,50))
         grid.drawGrid()
+        
+        if pause:
+            pygame.draw.rect(screen,"gray",rightButton)
+        else:
+            pygame.draw.rect(screen,"black",rightButton)
+        
+        pygame.draw.rect(screen,"black",leftButton)
+        
+        
+        screen.blit(left_text, (leftButton.x + (leftButton.width - left_text.get_width()) // 2, leftButton.y + (leftButton.height - left_text.get_height()) // 2))
+        screen.blit(right_text, (rightButton.x + (rightButton.width - right_text.get_width()) // 2, rightButton.y + (rightButton.height - right_text.get_height()) // 2))
         
         mx, my = pygame.mouse.get_pos()
          
@@ -23,12 +41,20 @@ async def asyncPlay() -> None:
                 sys.exit()
             elif event.type ==  pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
+                    if leftButton.collidepoint(mx, my):
+                        grid.clear()
+                        continue
+                    elif rightButton.collidepoint(mx, my):
+                        pause = not pause
+                        continue
+                        
                     moving = True
-                    grid.click(mx,my)
+                    grid.click(mx,my,True) 
+                    
             elif event.type == pygame.MOUSEBUTTONUP:
                 moving = False    
             elif event.type == pygame.MOUSEMOTION and moving:
-                grid.click(mx,my)
+                grid.click(mx,my,False)
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     pause = not pause
@@ -52,7 +78,7 @@ async def asyncPlay() -> None:
 if __name__ == "__main__":
     pygame.init()
     # Change this 3 parameters to control the look of the game 
-    resolution = [720, 720] 
+    resolution = [720, 770] 
     size = 10
     spacing = 1
     
